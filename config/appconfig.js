@@ -6,14 +6,14 @@ require('dotenv').config();
 module.exports = {
 	app: {
 		port: process.env.DEV_APP_PORT || 3000,
-		appName: process.env.APP_NAME || 'iLrn',
+		appName: process.env.APP_NAME || 'e-garage',
 		env: process.env.NODE_ENV || 'development',
 	},
 	db: {
-		port: process.env.DB_PORT || 5432,
-		database: process.env.DB_NAME || 'iLrn',
-		password: process.env.DB_PASS || 'password',
-		username: process.env.DB_USER || 'postgres',
+		port: process.env.DB_PORT || 3306,
+		database: process.env.DB_NAME || 'e-garage',
+		password: process.env.DB_PASS || 'root',
+		username: process.env.DB_USER || 'root',
 		host: process.env.DB_HOST || '127.0.0.1',
 		dialect: 'postgres',
 		logging: true,
