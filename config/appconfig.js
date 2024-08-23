@@ -1,37 +1,16 @@
+const { DataSource } = require("typeorm");
 
-
-require('dotenv').config();
-
-// config.js
-module.exports = {
-	app: {
-		port: process.env.DEV_APP_PORT || 3000,
-		appName: process.env.APP_NAME || 'e-garage',
-		env: process.env.NODE_ENV || 'development',
-	},
-	db: {
-		port: process.env.DB_PORT || 3306,
-		database: process.env.DB_NAME || 'e-garage',
-		password: process.env.DB_PASS || 'root',
-		username: process.env.DB_USER || 'root',
-		host: process.env.DB_HOST || '127.0.0.1',
-		dialect: 'postgres',
-		logging: true,
-	},
-	winiston: {
-		logpath: '/iLrnLogs/logs/',
-	},
-	auth: {
-		jwt_secret: process.env.JWT_SECRET,
-		jwt_expiresin: process.env.JWT_EXPIRES_IN || '1d',
-		saltRounds: process.env.SALT_ROUND || 10,
-		refresh_token_secret: process.env.REFRESH_TOKEN_SECRET || 'VmVyeVBvd2VyZnVsbFNlY3JldA==',
-		refresh_token_expiresin: process.env.REFRESH_TOKEN_EXPIRES_IN || '2d', // 2 days
-	},
-	sendgrid: {
-		api_key: process.env.SEND_GRID_API_KEY,
-		api_user: process.env.USERNAME,
-		from_email: process.env.FROM_EMAIL || 'alaa.mezian.mail@gmail.com',
-	},
-
-};
+const MysqlDataSource = new DataSource({
+    type: "mysql",
+    host: "localhost", // Replace with your MySQL host
+    port: 3306, // Default MySQL port
+    username: "root", 
+    password: "root", 
+    database: "e-garage", 
+    entities: [
+		require('../models/User')
+    ],
+    synchronize: true, // Auto-sync schema with the database, disable in production
+    logging: false, // Enable logging for debugging, disable in production
+});
+module.exports = MysqlDataSource;
