@@ -19,9 +19,9 @@ module.exports = new EntitySchema({
         created_at: {
             type: "timestamp",
             default: () => 'CURRENT_TIMESTAMP',
-            createDate: true, // Automatically sets the creation date
+            created_at: true, // Automatically sets the creation date
         },
-        created_at: {
+        updated_at: {
             type: "timestamp",
             default: () => 'CURRENT_TIMESTAMP',
             onUpdate: 'CURRENT_TIMESTAMP', // Automatically updates the date on update

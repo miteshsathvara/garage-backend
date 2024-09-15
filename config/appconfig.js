@@ -11,6 +11,7 @@ const AppDataSource = new typeorm.DataSource({
   entities: [
     require('../models/User'),
     require('../models/UserMobileVerification'),
+    require('../models/UserAddressDetails.js')
   ],
   synchronize: true, // Auto-sync schema with the database, disable in production
   logging: false, // Enable logging for debugging, disable in production

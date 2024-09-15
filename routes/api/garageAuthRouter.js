@@ -1,9 +1,8 @@
 const router = require('express').Router();
 const GarageAuthController = require('../../controllers/GarageAuth/GarageAuthController');
+const { garageUserSignupValidation } = require('../../validations/user.validation');
 
 // For User flow
-// router.post('/signUp', GarageAuthController.signUp);
-// router.get('/login', GarageAuthController.login);
-// router.post('/logout', GarageAuthController.logOut);
+router.post('/garage_signup',garageUserSignupValidation(), GarageAuthController.garageSignup);
 
 module.exports = router;
