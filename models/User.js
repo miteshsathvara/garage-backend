@@ -1,4 +1,5 @@
-const { EntitySchema } = require("typeorm");
+
+const { EntitySchema } = require('typeorm');
 
 module.exports = new EntitySchema({
     name: "User", // Will use table name `user`
@@ -18,17 +19,13 @@ module.exports = new EntitySchema({
             length: 200,
         },
         mobile_no: {
-            type: "int"
+            type: "bigint"
         },
         is_active: {
             type: "tinyint",
         },
         role: {
             type: "tinyint",
-        },
-        email: {
-            type: "varchar",
-            length: 200,
-        },  
+        }
     },
 });

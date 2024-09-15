@@ -480,8 +480,8 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(200) DEFAULT NULL,
   `last_name` varchar(200) DEFAULT NULL,
-  `mobile_no` int(11) DEFAULT NULL,
-  `is_active` tinyint(4) DEFAULT NULL,
+  `mobile_no` BIGINT(11) DEFAULT NULL,
+  `is_active` tinyint(4) DEFAULT 1,
   `role` tinyint(4) DEFAULT NULL,
   `email` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)

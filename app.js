@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const MysqlDataSource = require("./config/appconfig.js");
+const {AppDataSource} = require("./config/appconfig.js");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
   res.status(200).send("API IS RUNNING");
 });
 
-MysqlDataSource.initialize()
+AppDataSource.initialize()
   .then(() => {
     console.log("Database has been initialized!");
     // set port, listen for requests
