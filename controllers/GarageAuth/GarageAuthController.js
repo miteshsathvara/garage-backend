@@ -67,13 +67,3 @@ exports.garageSignup = async (req, res) => {
         res.status(500).json({ message: "An error occurred during Garage sign-up" });
     }
 };
-exports.verifyOtp = async (req, res) => {
-    //
-
-}
-exports.login = async (req, res) => {
-}
-
-exports.logOut = async (req, res) => {
-
-}
