@@ -10,7 +10,7 @@ const authenticateToken = (req, res, next) => {
     });
     try {
         const user = verifyToken(token);
-        console.log('user',user);
+       // console.log('user',user);
         req.user = user; 
         next();
     } catch (error) {
