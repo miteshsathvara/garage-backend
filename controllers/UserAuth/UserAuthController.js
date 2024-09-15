@@ -3,6 +3,7 @@ const User = require("../../models/User.js");
 const UserMobileVerification = require("../../models/UserMobileVerification.js");
 const { validationResult } = require('express-validator');
 const otpService = require('../../services/otpService.js');
+const jwtTokenService = require('../../services/jwtTokenService.js');
 const userRepository = AppDataSource.getRepository(User);
 const userMobileVerificationRepository = AppDataSource.getRepository(UserMobileVerification);
 
@@ -60,11 +61,13 @@ exports.verifyOtp = async (req, res) => {
         .createQueryBuilder("user_mobile_verification") 
         .where("user_mobile_verification.user_id = :user_id", { user_id: existingUser.id })
         .getOne();
-        
     }
     if(getUserData && getUserData.id) {
         console.log(getUserData);
         if(getUserData.otp == otp ){
+            // Generate JWT Token
+            const token = jwtTokenService.generateToken({existingUser });
+            existingUser.token = token;
             res.status(201).json({ message: "OTP Verification Successfully.", user: existingUser });
         }else{
             res.status(404).json({ message: "OTP Verification Failed."});
@@ -103,5 +106,5 @@ exports.login = async (req, res) => {
 }
 
 exports.logOut = async (req, res) => {
-
+    console.log('logout api here');
 }
