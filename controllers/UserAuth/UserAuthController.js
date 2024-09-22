@@ -68,7 +68,7 @@ exports.verifyOtp = async (req, res) => {
             // Generate JWT Token
             const token = jwtTokenService.generateToken({existingUser });
             existingUser.token = token;
-            res.status(201).json({ message: "OTP Verification Successfully.", user: existingUser });
+            res.status(201).json({ status:"Success",message: "OTP Verification Successfully.", user: existingUser });
         }else{
             res.status(404).json({ message: "OTP Verification Failed."});
         }
@@ -76,6 +76,7 @@ exports.verifyOtp = async (req, res) => {
 }
 exports.login = async (req, res) => {
     try {
+        
         const { mobile_no } = req.body;
 
         // Check if the mobile number is already registered
