@@ -189,6 +189,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'user'),(2,'garage');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,23 +230,18 @@ DROP TABLE IF EXISTS `user_address_details`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_address_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `street_address` text,
-  `apartment` text,
-  `city` varchar(50) DEFAULT NULL,
-  `state` varchar(50) DEFAULT NULL,
-  `zipcode` int(11) DEFAULT NULL,
-  `latitude` decimal(10,7) DEFAULT NULL,
-  `longitude` decimal(10,7) DEFAULT NULL,
-  -- `created_at` TIMESTAMP DEFAULT NULL,
-  -- `updated_at` TIMESTAMP DEFAULT NULL,
-  `garage_name` varchar(200) DEFAULT NULL,
-  `owner_name` varchar(200) DEFAULT NULL,
-  `is_notification` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `user_address_details_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `user_id` int(11) NOT NULL,
+  `street_address` text NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `zipcode` int(11) NOT NULL,
+  `latitude` decimal(10,0) DEFAULT NULL,
+  `longitude` decimal(10,0) DEFAULT NULL,
+  `garage_name` varchar(200) NOT NULL,
+  `owner_name` varchar(200) NOT NULL,
+  `is_notification` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,6 +250,7 @@ CREATE TABLE `user_address_details` (
 
 LOCK TABLES `user_address_details` WRITE;
 /*!40000 ALTER TABLE `user_address_details` DISABLE KEYS */;
+INSERT INTO `user_address_details` VALUES (1,15,'casario','Mahesana','Gujarat',384001,NULL,NULL,'Dolly Garage','Dolly',0),(2,16,'casario','Mahesana','Gujarat',384001,NULL,NULL,'Dolly Garage','Dolly',0);
 /*!40000 ALTER TABLE `user_address_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,14 +322,12 @@ DROP TABLE IF EXISTS `user_mobile_verification`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_mobile_verification` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `otp` int(6) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `user_mobile_verification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `user_id` int(11) NOT NULL,
+  `otp` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -341,6 +336,7 @@ CREATE TABLE `user_mobile_verification` (
 
 LOCK TABLES `user_mobile_verification` WRITE;
 /*!40000 ALTER TABLE `user_mobile_verification` DISABLE KEYS */;
+INSERT INTO `user_mobile_verification` VALUES (1,0,662929,'2024-09-15 06:10:58','2024-09-15 16:16:01'),(4,12,111111,'2024-09-15 07:28:02','2024-09-15 16:16:01'),(5,16,111111,'2024-09-15 16:34:32','2024-09-15 16:34:32');
 /*!40000 ALTER TABLE `user_mobile_verification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -478,14 +474,13 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(200) DEFAULT NULL,
-  `last_name` varchar(200) DEFAULT NULL,
-  `mobile_no` BIGINT(11) DEFAULT NULL,
-  `is_active` tinyint(4) DEFAULT 1,
-  `role` tinyint(4) DEFAULT NULL,
-  `email` varchar(200) DEFAULT NULL,
+  `first_name` varchar(200) NOT NULL,
+  `last_name` varchar(200) NOT NULL,
+  `is_active` tinyint(4) NOT NULL,
+  `role` tinyint(4) NOT NULL,
+  `mobile_no` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,6 +489,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (9,'mitesh','sathvara',1,1,7359083263),(10,'mitesh','sathvara',1,1,7359083264),(11,'mitesh','sathvara',1,1,7359083260),(12,'mitesh','sathvara',1,1,7359083267),(13,'ms','sathvara',1,2,7485957659),(14,'ms','sathvara',1,2,7485957650),(15,'ms','sathvara',1,2,7485957651),(16,'ms','sathvara',1,2,7485957656);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -590,4 +586,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-22 11:19:28
+-- Dump completed on 2024-09-18 21:56:37
