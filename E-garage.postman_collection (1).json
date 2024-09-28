@@ -1,32 +1,11 @@
 {
 	"info": {
-		"_postman_id": "5e6014d8-61aa-44a1-992b-2d64ce24b1a3",
+		"_postman_id": "403ee9d3-90a2-480b-aa05-0742e5767b19",
 		"name": "E-garage",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "497783"
+		"_exporter_id": "33342795"
 	},
 	"item": [
-		{
-			"name": "login",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:5050/api/v1/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5050",
-					"path": [
-						"api",
-						"v1",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
 		{
 			"name": "User Signup",
 			"request": {
@@ -34,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"first_name\":\"mitesh\",\n    \"last_name\":\"sathvara\",\n    \"mobile_no\":\"7359083267\"\n}",
+					"raw": "{\n    \"first_name\":\"Tanmay\",\n    \"last_name\":\"Trivedi\",\n    \"mobile_no\":\"9867289954\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -42,14 +21,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/api/v1/garage_signup",
+					"raw": "{{url}}/api/v1/signup",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"api",
 						"v1",
-						"garage_signup"
+						"signup"
 					]
 				}
 			},
@@ -57,12 +36,38 @@
 		},
 		{
 			"name": "Verify OTP",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var obj = JSON.parse(responseBody);\r",
+							"if(obj.status === 'Success'){\r",
+							" postman.setEnvironmentVariable(\"token\", obj.user.token);\r",
+							"}else{\r",
+							"postman.clearEnvironmentVariable(obj.user.token);\r",
+							"}\r",
+							"tests[\"Valid User\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"mobile_no\":\"7359083267\",\n    \"otp\": \"111111\"\n}",
+					"raw": "{\n    \"mobile_no\":\"9867289954\",\n    \"otp\": \"111111\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,7 +95,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"mobile_no\":\"7359083267\"\n}",
+					"raw": "{\n    \"mobile_no\":\"9867289954\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -113,12 +118,15 @@
 		},
 		{
 			"name": "Logout",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjYzODcwNTQsImV4cCI6MTcyNjQ3MzQ1NH0.xSs83cG7WHqgf4eWtrkvEqK6K5iY234ZsIwP5O3sVL",
+						"value": "Bearer {{token}}",
 						"type": "text"
 					}
 				],
@@ -168,6 +176,40 @@
 						"api",
 						"v1",
 						"garage_signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Garage detils update",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"garage_name\": \"New mahesana Garage\",\n    \"mobile_no\": \"7485957656\",\n    \"owner_name\": \"Mr. Mitesh Sathvara\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/garage_details_update",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"garage_details_update"
 					]
 				}
 			},

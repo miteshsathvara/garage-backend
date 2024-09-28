@@ -67,3 +67,30 @@ exports.garageSignup = async (req, res) => {
         res.status(500).json({ message: "An error occurred during Garage sign-up" });
     }
 };
+
+exports.updateDetails = async (req, res) => {
+    try {
+        // Standard validation of the params.
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const errormessage = errors.array().map(err => err.msg);
+            return res.status(400).json({ errors: errormessage });
+        }
+        const {garage_name, owner_name, mobile_no} = req.body;
+        // Check if the mobile number is there in registery or not.
+        const existingUser = await userRepository.findOneBy({ mobile_no });
+        if (!existingUser) {
+            return res.status(404).json({ message: "Mobile number not registered, please register first to proceed." });
+        }
+        // Now we update the details using the user's unique ID.
+        const userAddressDetailsNew = await userAddressDetailsRepository.findOneBy({user_id:existingUser.id});
+        userAddressDetailsNew.garage_name = garage_name;
+        userAddressDetailsNew.owner_name = owner_name;
+        userAddressDetailsRepository.save(userAddressDetailsNew);
+        res.status(200).json({ message: "Garage Details have been updated."});
+
+    } catch (error) {
+        console.error("Error dusing the update of the garage details : ", error)
+        res.status(500).json({message :"An error occured during the change details"});
+    }
+};

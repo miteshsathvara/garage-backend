@@ -52,17 +52,16 @@ DROP TABLE IF EXISTS `garage_charges`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `garage_charges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
   `day_charge` varchar(200) DEFAULT NULL,
   `day_time_slot` varchar(200) DEFAULT NULL,
   `night_charge` varchar(200) DEFAULT NULL,
   `night_time_slot` varchar(200) DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
-  `account_number` varchar(200) DEFAULT NULL,
-  `bank_name` varchar(200) DEFAULT NULL,
-  `ifsc_code` varchar(200) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT `garage_charges_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -74,6 +73,24 @@ LOCK TABLES `garage_charges` WRITE;
 /*!40000 ALTER TABLE `garage_charges` DISABLE KEYS */;
 /*!40000 ALTER TABLE `garage_charges` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `garage_bank_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `garage_bank_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `status` tinyint(4) DEFAULT NULL,
+  `account_number` varchar(200) DEFAULT NULL,
+  `bank_name` varchar(200) DEFAULT NULL,
+  `ifsc_code` varchar(200) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `garage_bank_details_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `garage_mechnic_details`
@@ -478,7 +495,8 @@ CREATE TABLE `users` (
   `last_name` varchar(200) NOT NULL,
   `is_active` tinyint(4) NOT NULL,
   `role` tinyint(4) NOT NULL,
-  `mobile_no` bigint(20) NOT NULL,
+  `mobile_no` bigint(20) NOT NULL UNIQUE,
+  `created_date` datetime DEFAULT NOW(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -489,7 +507,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (9,'mitesh','sathvara',1,1,7359083263),(10,'mitesh','sathvara',1,1,7359083264),(11,'mitesh','sathvara',1,1,7359083260),(12,'mitesh','sathvara',1,1,7359083267),(13,'ms','sathvara',1,2,7485957659),(14,'ms','sathvara',1,2,7485957650),(15,'ms','sathvara',1,2,7485957651),(16,'ms','sathvara',1,2,7485957656);
+INSERT INTO `users` VALUES (9,'mitesh','sathvara',1,1,7359083263,NOW()),(10,'mitesh','sathvara',1,1,7359083264,NOW()),(11,'mitesh','sathvara',1,1,7359083260,NOW()),(12,'mitesh','sathvara',1,1,7359083267,NOW()),(13,'ms','sathvara',1,2,7485957659,NOW()),(14,'ms','sathvara',1,2,7485957650,NOW()),(15,'ms','sathvara',1,2,7485957651,NOW()),(16,'ms','sathvara',1,2,7485957656,NOW());
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
